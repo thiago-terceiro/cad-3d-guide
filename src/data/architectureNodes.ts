@@ -5,6 +5,15 @@ export interface ArchitectureNodeData {
   title: string;
   subtitle: string;
   accent: "cyan" | "amber" | "emerald";
+  protocol: string;
+  engineBadge: string;
+  inputArtifact: string;
+  outputArtifact: string;
+  latencyBudget: string;
+  liveMetricDefault: string;
+  liveMetricFail?: string;
+  liveMetricFixed?: string;
+  verificationChecks: string[];
   summary: string;
   whyStageExists: string;
   mcpConfig: string;
@@ -23,6 +32,17 @@ export const architectureNodes: ArchitectureNodeData[] = [
     title: "1. AI Coding Harness (Claude Code / Codex / Cursor / Antigravity)",
     subtitle: "STAGE 01 · INTENT & ORCHESTRATION",
     accent: "cyan",
+    protocol: "MCP JSON-RPC",
+    engineBadge: "Claude · Codex · AGY",
+    inputArtifact: "Spec + Constraints",
+    outputArtifact: "parametric_part.py",
+    latencyBudget: "~1.2s AST synth",
+    liveMetricDefault: "AST: 64 params · 0 GUI",
+    verificationChecks: [
+      "Strict Python typing & deterministic seed constraints",
+      "Parametric variables isolated for automated mutation",
+      "Zero binary CAD blobs — 100% git-diffable source",
+    ],
     summary:
       "The agentic coding harness translates high-level mechanical requirements (loads, tolerances, print orientation) into deterministic Python scripts and invokes MCP tools in a tight feedback loop.",
     whyStageExists:
@@ -60,6 +80,18 @@ uv tool run --python 3.12 build123d-mcp@latest --help`,
     title: "2. Code-CAD MCP (build123d-mcp / FreeCAD MCP)",
     subtitle: "STAGE 02 · B-REP KERNEL EXECUTION",
     accent: "cyan",
+    protocol: "OCCT 7.8 Kernel",
+    engineBadge: "build123d + OpenCascade",
+    inputArtifact: "parametric_part.py",
+    outputArtifact: "part.step · part.stl",
+    latencyBudget: "~380ms B-Rep solve",
+    liveMetricDefault: "B-Rep: 14.8 cm³ · STEP",
+    liveMetricFixed: "Patched: +0.25mm root",
+    verificationChecks: [
+      "Exact analytic NURBS / B-Rep solid synthesis via OCCT",
+      "Automatic fillet & chamfer topological edge resolution",
+      "Dual export: ISO-10303 STEP for CNC + binary STL/3MF",
+    ],
     summary:
       "Executes pure-Python build123d scripts on top of OpenCascade (OCCT) to synthesize exact mathematical B-Rep solids, exporting watertight STEP, STL, and 3MF artifacts.",
     whyStageExists:
@@ -105,6 +137,19 @@ uv add build123d ocp-vscode pytest`,
     title: "3. Visual & Topological Gate (4-View PNGs + B-Rep Check)",
     subtitle: "STAGE 03 · SELF-CORRECTION CHECKPOINT",
     accent: "amber",
+    protocol: "VLM + B-Rep Gate",
+    engineBadge: "4-View PNG + Manifold",
+    inputArtifact: "part.step + 4x Ortho PNG",
+    outputArtifact: "Boolean Gate + Delta",
+    latencyBudget: "~520ms boolean check",
+    liveMetricDefault: "Clearance: +0.25mm OK",
+    liveMetricFail: "COLLISION: -0.42mm!",
+    liveMetricFixed: "Clearance: +0.25mm PASS",
+    verificationChecks: [
+      "solid.is_valid() watertight manifold & positive volume check",
+      "Boolean intersection volume == 0.00 mm³ across mating gears",
+      "Multimodal 4-view orthographic PNG VLM defect inspection",
+    ],
     summary:
       "Renders orthographic Iso, Top, Front, and Right PNGs for multimodal VLM inspection while running automated B-Rep manifold, interference, and clearance assertions.",
     whyStageExists:
@@ -144,6 +189,17 @@ uv run pytest tests/test_topology.py -v
     title: "4. Physics & FEA Verifier (MuJoCo / Genesis & CalculiX)",
     subtitle: "STAGE 04 · KINEMATICS & STRUCTURAL INTEGRITY",
     accent: "amber",
+    protocol: "MJCF + CalculiX",
+    engineBadge: "MuJoCo 3 · CalculiX ccx",
+    inputArtifact: "assembly.xml · mesh.inp",
+    outputArtifact: "Stress & Torque Report",
+    latencyBudget: "~1.4s FEM + 500Hz sim",
+    liveMetricDefault: "SF: 2.84x · 29.0 MPa",
+    verificationChecks: [
+      "MuJoCo 500Hz rigid-body gear train transmission & backlash test",
+      "CalculiX tetrahedral FEM von Mises peak stress < yield / 2.0",
+      "Max tip deflection <= 1.20 mm under 200 N rated load",
+    ],
     summary:
       "Wraps exported meshes into URDF/MJCF for headless MuJoCo/Genesis rigid-body kinematics tests and runs CalculiX finite-element analysis to verify von Mises stress and Safety Factors.",
     whyStageExists:
@@ -181,6 +237,17 @@ uv run pytest tests/test_planetary_kinematics.py`,
     title: "5. Headless CLI Slicer (PrusaSlicer / OrcaSlicer G-Code)",
     subtitle: "STAGE 05 · DESIGN FOR MANUFACTURING (DFM)",
     accent: "emerald",
+    protocol: "CLI G-Code DFM",
+    engineBadge: "PrusaSlicer · Orca CLI",
+    inputArtifact: "verified_part.3mf",
+    outputArtifact: "part.gcode + DFM JSON",
+    latencyBudget: "~640ms CLI slice",
+    liveMetricDefault: "38m 12s · 19.4g · 0 err",
+    verificationChecks: [
+      "Zero unprintable >45° overhangs without support structures",
+      "Minimum wall thickness >= 2x 0.4mm nozzle perimeter width",
+      "Gyroid infill mass, print duration & G-code checksum verified",
+    ],
     summary:
       "Invokes PrusaSlicer or OrcaSlicer via CLI to slice the verified STL/3MF into machine G-code and parses filament mass, print duration, support volume, and >45° overhang warnings.",
     whyStageExists:

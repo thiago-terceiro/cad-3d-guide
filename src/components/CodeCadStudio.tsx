@@ -1,3 +1,7 @@
+import { Box, CheckCircle2, Download, Eye, Layers } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { Badge } from "@/design-system/Badge";
 import { Button } from "@/design-system/Button";
 import { Card } from "@/design-system/Card";
@@ -5,15 +9,11 @@ import { CodeBlock } from "@/design-system/CodeBlock";
 import { Slider } from "@/design-system/Slider";
 import { useTranslation } from "@/i18n/I18nContext";
 import {
-  type GearParams,
   computeGearMetrics,
   createSpurGearGeometry,
+  type GearParams,
   geometryToAsciiStl,
 } from "@/utils/cadGeometry";
-import { Box, CheckCircle2, Download, Eye, Layers } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
-import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 type CadView = "iso" | "top" | "front" | "right";
 
@@ -46,6 +46,8 @@ export function CodeCadStudio() {
   const controlsRef = useRef<OrbitControls | null>(null);
 
   const metrics = useMemo(() => computeGearMetrics(params), [params]);
+  // Latest params snapshot so the one-time scene initializer can read them without re-running.
+  const initialParamsRef = useRef(params);
 
   const pythonScript = useMemo(() => {
     return `from build123d import (
@@ -122,7 +124,7 @@ export_stl(spur_gear.part, "build/spur_gear.stl")`;
     rimLight.position.set(-50, -30, -40);
     scene.add(rimLight);
 
-    const initialGeo = createSpurGearGeometry(params);
+    const initialGeo = createSpurGearGeometry(initialParamsRef.current);
     const material = new THREE.MeshStandardMaterial({
       color: "#06B6D4",
       metalness: 0.45,
@@ -162,12 +164,11 @@ export_stl(spur_gear.part, "build/spur_gear.stl")`;
       resizeObserver.disconnect();
       window.removeEventListener("resize", handleResize);
       controls.dispose();
-      initialGeo.dispose();
+      mesh.geometry.dispose();
       material.dispose();
       renderer.dispose();
       container.innerHTML = "";
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Update procedural gear geometry when sliders move
@@ -292,7 +293,10 @@ export_stl(spur_gear.part, "build/spur_gear.stl")`;
                 </span>
               </div>
 
-              <div className="flex items-center gap-1" role="group" aria-label="Orthographic views">
+              <fieldset
+                className="m-0 flex items-center gap-1 border-0 p-0"
+                aria-label="Orthographic views"
+              >
                 <Eye className="mr-1 h-3.5 w-3.5 text-[#94A3B8]" aria-hidden="true" />
                 {(["iso", "top", "front", "right"] as CadView[]).map((view) => (
                   <button
@@ -309,7 +313,7 @@ export_stl(spur_gear.part, "build/spur_gear.stl")`;
                     {t.cad.views[view]}
                   </button>
                 ))}
-              </div>
+              </fieldset>
             </div>
 
             <div className="relative h-[340px] w-full bg-[#090D16] sm:h-[380px]">

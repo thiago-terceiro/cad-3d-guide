@@ -1,6 +1,6 @@
+import { Cpu, Globe } from "lucide-react";
 import { useTranslation } from "@/i18n/I18nContext";
 import type { Locale } from "@/i18n/translations";
-import { Cpu, Globe } from "lucide-react";
 
 const locales: { id: Locale; label: string }[] = [
   { id: "en", label: "EN" },
@@ -28,8 +28,8 @@ export function Navbar({ activePage, onNavigatePage }: NavbarProps) {
   return (
     <header className="sticky top-0 z-40 border-b border-[#1F2937] bg-[#090D16]/95 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-2 sm:px-6">
-        <a
-          href="#top"
+        <button
+          type="button"
           onClick={() => onNavigatePage("lab")}
           className="flex min-h-[44px] items-center gap-2.5 rounded-lg px-2 text-[#F8FAFC] hover:text-[#67E8F9]"
         >
@@ -37,7 +37,7 @@ export function Navbar({ activePage, onNavigatePage }: NavbarProps) {
             <Cpu className="h-4 w-4" aria-hidden="true" />
           </span>
           <span className="font-mono text-sm font-bold tracking-tight">{t.appTitle}</span>
-        </a>
+        </button>
 
         <nav aria-label="Primary sections" className="hidden items-center gap-1 lg:flex">
           {activePage === "lab" ? (
@@ -83,30 +83,30 @@ export function Navbar({ activePage, onNavigatePage }: NavbarProps) {
             {activePage === "examples" ? t.nav.mainLabPage : t.nav.examplesPage}
           </button>
 
-        <fieldset
-          className="flex items-center gap-1.5 border-0 p-0 m-0"
-          aria-label={t.nav.languageLabel}
-        >
-          <Globe className="mr-1 h-4 w-4 text-[#94A3B8]" aria-hidden="true" />
-          {locales.map((item) => {
-            const active = locale === item.id;
-            return (
-              <button
-                key={item.id}
-                type="button"
-                aria-pressed={active}
-                onClick={() => setLocale(item.id)}
-                className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border px-2.5 font-mono text-xs font-semibold transition-colors ${
-                  active
-                    ? "border-[#22D3EE] bg-[#083344] text-[#67E8F9]"
-                    : "border-[#1F2937] bg-[#111827] text-[#CBD5E1] hover:border-[#374151]"
-                }`}
-              >
-                {item.label}
-              </button>
-            );
-          })}
-        </fieldset>
+          <fieldset
+            className="flex items-center gap-1.5 border-0 p-0 m-0"
+            aria-label={t.nav.languageLabel}
+          >
+            <Globe className="mr-1 h-4 w-4 text-[#94A3B8]" aria-hidden="true" />
+            {locales.map((item) => {
+              const active = locale === item.id;
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => setLocale(item.id)}
+                  className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border px-2.5 font-mono text-xs font-semibold transition-colors ${
+                    active
+                      ? "border-[#22D3EE] bg-[#083344] text-[#67E8F9]"
+                      : "border-[#1F2937] bg-[#111827] text-[#CBD5E1] hover:border-[#374151]"
+                  }`}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
+          </fieldset>
         </div>
       </div>
     </header>

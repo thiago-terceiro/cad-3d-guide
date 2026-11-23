@@ -1,9 +1,9 @@
-import { type HarnessId, curriculumSteps } from "@/data/curriculumSteps";
+import { Bot, CheckCircle2, Code2, FileJson, Terminal } from "lucide-react";
+import { useState } from "react";
+import { curriculumSteps, type HarnessId } from "@/data/curriculumSteps";
 import { Card } from "@/design-system/Card";
 import { CodeBlock } from "@/design-system/CodeBlock";
 import { useTranslation } from "@/i18n/I18nContext";
-import { Bot, CheckCircle2, Code2, FileJson, Terminal } from "lucide-react";
-import { useState } from "react";
 
 const HARNESSES: { id: HarnessId; label: string }[] = [
   { id: "claude", label: "Claude Code" },

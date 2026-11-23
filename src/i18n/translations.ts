@@ -32,6 +32,19 @@ export interface TranslationDictionary {
     cliSetupTitle: string;
     whyStageTitle: string;
     alternativesTitle: string;
+    pauseBtn: string;
+    resumeBtn: string;
+    autoReplayBtn: string;
+    speedLabel: string;
+    scrubberLabel: string;
+    telemetryConsoleTitle: string;
+    stageInspectorTitle: string;
+    openDeepDiveBtn: string;
+    kpiIteration: string;
+    kpiClearance: string;
+    kpiSafetyFactor: string;
+    kpiPrintability: string;
+    telemetryReturnArc: string;
   };
   cad: {
     sectionTitle: string;
@@ -151,6 +164,19 @@ export const translations: Record<Locale, TranslationDictionary> = {
       cliSetupTitle: "Headless CLI Setup",
       whyStageTitle: "Why This Stage Exists",
       alternativesTitle: "Alternatives & Trade-offs",
+      pauseBtn: "Pause Loop",
+      resumeBtn: "Resume Loop",
+      autoReplayBtn: "Auto-Cycle",
+      speedLabel: "Playback speed",
+      scrubberLabel: "Timeline scrubber",
+      telemetryConsoleTitle: "Live MCP JSON-RPC & Kernel Stream",
+      stageInspectorTitle: "Active Stage Architecture & Gates",
+      openDeepDiveBtn: "Inspect .mcp.json & CLI Setup",
+      kpiIteration: "Loop Convergence",
+      kpiClearance: "Topological Clearance",
+      kpiSafetyFactor: "FEM Safety Factor",
+      kpiPrintability: "DFM Slicer Gate",
+      telemetryReturnArc: "Closed-Loop Manufacturing Telemetry Return (Stage 5 → Stage 1)",
     },
     cad: {
       sectionTitle: "Live Parametric Code-CAD Studio",
@@ -272,6 +298,19 @@ export const translations: Record<Locale, TranslationDictionary> = {
       cliSetupTitle: "Instalação CLI Headless",
       whyStageTitle: "Por Que Este Estágio Existe",
       alternativesTitle: "Alternativas & Trade-offs",
+      pauseBtn: "Pausar Loop",
+      resumeBtn: "Retomar Loop",
+      autoReplayBtn: "Ciclo Contínuo",
+      speedLabel: "Velocidade de reprodução",
+      scrubberLabel: "Linha do tempo do loop",
+      telemetryConsoleTitle: "Stream MCP JSON-RPC & Kernel ao Vivo",
+      stageInspectorTitle: "Arquitetura & Portões do Estágio Ativo",
+      openDeepDiveBtn: "Inspecionar .mcp.json & CLI",
+      kpiIteration: "Convergência do Loop",
+      kpiClearance: "Folga Topológica",
+      kpiSafetyFactor: "Fator de Segurança FEM",
+      kpiPrintability: "Portão DFM do Slicer",
+      telemetryReturnArc: "Retorno de Telemetria de Manufatura (Estágio 5 → Estágio 1)",
     },
     cad: {
       sectionTitle: "Estúdio Code-CAD Paramétrico ao Vivo",
@@ -393,6 +432,19 @@ export const translations: Record<Locale, TranslationDictionary> = {
       cliSetupTitle: "Instalación CLI Headless",
       whyStageTitle: "Por Qué Existe Esta Etapa",
       alternativesTitle: "Alternativas y Trade-offs",
+      pauseBtn: "Pausar Loop",
+      resumeBtn: "Reanudar Loop",
+      autoReplayBtn: "Ciclo Continuo",
+      speedLabel: "Velocidad de reproducción",
+      scrubberLabel: "Línea de tiempo del loop",
+      telemetryConsoleTitle: "Stream MCP JSON-RPC y Kernel en Vivo",
+      stageInspectorTitle: "Arquitectura y Puertas de la Etapa Activa",
+      openDeepDiveBtn: "Inspeccionar .mcp.json y CLI",
+      kpiIteration: "Convergencia del Loop",
+      kpiClearance: "Holgura Topológica",
+      kpiSafetyFactor: "Factor de Seguridad FEM",
+      kpiPrintability: "Puerta DFM del Slicer",
+      telemetryReturnArc: "Retorno de Telemetría de Manufactura (Etapa 5 → Etapa 1)",
     },
     cad: {
       sectionTitle: "Estudio Code-CAD Paramétrico en Vivo",

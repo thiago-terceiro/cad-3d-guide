@@ -1,18 +1,31 @@
-import { useState } from "react";
-import { CodeCadStudio } from "@/components/CodeCadStudio";
+import { lazy, Suspense, useState } from "react";
 import { CurriculumStepper } from "@/components/CurriculumStepper";
-import { GeneralExamplesPage } from "@/components/GeneralExamplesPage";
 import { HeroArchitectureMap } from "@/components/HeroArchitectureMap";
 import { Navbar } from "@/components/Navbar";
-import { PhysicsFeaSandbox } from "@/components/PhysicsFeaSandbox";
-import { SlicerAnalyzer } from "@/components/SlicerAnalyzer";
+import { SectionSkeleton } from "@/components/SectionSkeleton";
 import { TechStackGuide } from "@/components/TechStackGuide";
 import { I18nProvider } from "@/i18n/I18nContext";
 
-export function App() {
-  const [activePage, setActivePage] = useState<"lab" | "examples">("lab");
+// Three.js-heavy sections are code-split so the hero loop paints without waiting on WebGL code.
+const CodeCadStudio = lazy(() =>
+  import("@/components/CodeCadStudio").then((m) => ({ default: m.CodeCadStudio })),
+);
+const PhysicsFeaSandbox = lazy(() =>
+  import("@/components/PhysicsFeaSandbox").then((m) => ({ default: m.PhysicsFeaSandbox })),
+);
+const SlicerAnalyzer = lazy(() =>
+  import("@/components/SlicerAnalyzer").then((m) => ({ default: m.SlicerAnalyzer })),
+);
+const GeneralExamplesPage = lazy(() =>
+  import("@/components/GeneralExamplesPage").then((m) => ({ default: m.GeneralExamplesPage })),
+);
 
-  const handleNavigatePage = (page: "lab" | "examples") => {
+export type AppPage = "lab" | "examples";
+
+export function App() {
+  const [activePage, setActivePage] = useState<AppPage>("lab");
+
+  const handleNavigatePage = (page: AppPage) => {
     setActivePage(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -24,14 +37,22 @@ export function App() {
         {activePage === "lab" ? (
           <main>
             <HeroArchitectureMap />
-            <CodeCadStudio />
-            <PhysicsFeaSandbox />
-            <SlicerAnalyzer />
+            <Suspense fallback={<SectionSkeleton id="cad-studio" />}>
+              <CodeCadStudio />
+            </Suspense>
+            <Suspense fallback={<SectionSkeleton id="physics-fea" />}>
+              <PhysicsFeaSandbox />
+            </Suspense>
+            <Suspense fallback={<SectionSkeleton id="slicer" />}>
+              <SlicerAnalyzer />
+            </Suspense>
             <TechStackGuide />
             <CurriculumStepper />
           </main>
         ) : (
-          <GeneralExamplesPage onBack={() => handleNavigatePage("lab")} />
+          <Suspense fallback={<SectionSkeleton id="examples" />}>
+            <GeneralExamplesPage onBack={() => handleNavigatePage("lab")} />
+          </Suspense>
         )}
         <footer className="border-t border-[#1F2937] bg-[#090D16] py-8">
           <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 font-mono text-xs text-[#94A3B8] sm:px-6">

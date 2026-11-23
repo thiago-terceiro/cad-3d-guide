@@ -1,9 +1,9 @@
+import { ArrowRightLeft, BookOpen, Check, Factory, Minus } from "lucide-react";
+import { useState } from "react";
 import { techStackGuide } from "@/data/techStackGuide";
 import { Badge } from "@/design-system/Badge";
 import { Card } from "@/design-system/Card";
 import { useTranslation } from "@/i18n/I18nContext";
-import { ArrowRightLeft, BookOpen, Check, Factory, Minus } from "lucide-react";
-import { useState } from "react";
 
 export function TechStackGuide() {
   const { t } = useTranslation();

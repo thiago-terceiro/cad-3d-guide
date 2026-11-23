@@ -10,9 +10,19 @@
 5. **Headless CLI Slicer**: `prusa-slicer` / `orca-slicer` CLI exports G-code and parses JSON printability telemetry (filament, print time, support volume, >45° overhangs).
 
 ## Key Modules
-- `src/components/HeroArchitectureMap.tsx`: Animated 5-stage SVG node-graph with closed-loop failure/recovery simulation and `.mcp.json` deep-dive drawer.
+- `src/components/HeroArchitectureMap.tsx`: Enlarged 1240x470 multi-layer animated 5-stage SVG schematic with 60fps continuous packet + comet-trail animation, cubic-Bézier self-correction feedback loop (`Gate 3 -> Stage 2`), full-cycle telemetry return arc (`Stage 5 -> Stage 1`), pause/resume, playback speed multiplier (`0.5x`, `1x`, `2x`), auto-cycle toggle, timeline scrubber, direct phase jump pills, live MCP JSON-RPC stream console, active stage verification inspector, and `.mcp.json` deep-dive drawer.
+- `src/features/hero-loop/geometry.ts`: Pure 2D line & cubic-Bézier path compiler with arc-length LUT parameterization for constant-speed packet motion.
+- `src/features/hero-loop/timeline.ts`: Deterministic 9-phase closed-loop simulation solver (`stage1`, `stage2`, `stage3-fail`, `loopback`, `stage2-fix`, `stage3-pass`, `stage4`, `stage5`, `passed`), comet-trail generator, node progress state machine, and live MCP JSON-RPC telemetry catalog.
 - `src/components/CodeCadStudio.tsx`: Split-pane `build123d` Python editor + Three.js 3D CAD viewport with orthographic 4-view toggle and real STL/STEP/3MF export.
 - `src/components/PhysicsFeaSandbox.tsx`: Dual-mode MuJoCo planetary gear kinematics + CalculiX FEA von Mises stress heatmap.
 - `src/components/SlicerAnalyzer.tsx`: Layer 1-240 horizontal G-code slicer with gyroid infill, >45° overhang detection, and CLI JSON telemetry.
 - `src/components/TechStackGuide.tsx`: Detailed comparison of Code-CAD kernels, MCP vs CLI, physics engines, FEA solvers, and headless slicers with pros/cons and alternatives.
 - `src/components/CurriculumStepper.tsx`: 5-step copyable curriculum with `.mcp.json` configs, Python scripts, and system prompts.
+- `src/components/GeneralExamplesPage.tsx`: Everyday Parametric 3D Printing Gallery with 3 interactive Three.js + `build123d` examples (Threaded Jar & Knurled Cap, Print-in-Place Articulated Hinge, Modular Desk Cable Organizer).
+
+## Toolchain & Verification
+- Package Manager: `pnpm` (`pnpm@12.21.0`)
+- Runtime & Bundler: React 19.3, TypeScript 7.0, Vite 8.3, Tailwind CSS 4.3, Three.js 0.187
+- Linter & Formatter: Biome 2.6 (`pnpm run lint`, `pnpm run format`)
+- Unit & Component Tests: Vitest 5.1 + React Testing Library + `@vitest/coverage-v8` (`pnpm run test:unit`, `pnpm run test:coverage`)
+- E2E & Accessibility Audits: Playwright 1.65 + `@axe-core/playwright` 4.14 (`pnpm run test:e2e`)

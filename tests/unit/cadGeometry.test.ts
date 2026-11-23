@@ -1,3 +1,4 @@
+import { describe, expect, it } from "vitest";
 import {
   computeFeaMetrics,
   computeGearMetrics,
@@ -7,7 +8,6 @@ import {
   geometryToAsciiStl,
   stressToColor,
 } from "@/utils/cadGeometry";
-import { describe, expect, it } from "vitest";
 
 describe("cadGeometry domain math", () => {
   it("computes accurate spur gear pitch, outer diameter, volume, and watertight status", () => {

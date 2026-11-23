@@ -1,13 +1,13 @@
+import { AlertTriangle, Layers, Printer, Terminal } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { Badge } from "@/design-system/Badge";
 import { Card } from "@/design-system/Card";
 import { CodeBlock } from "@/design-system/CodeBlock";
 import { Slider } from "@/design-system/Slider";
 import { useTranslation } from "@/i18n/I18nContext";
 import { computeSlicerTelemetry } from "@/utils/cadGeometry";
-import { AlertTriangle, Layers, Printer, Terminal } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
-import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 export function SlicerAnalyzer() {
   const { t } = useTranslation();

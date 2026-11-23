@@ -1,6 +1,6 @@
-import { useTranslation } from "@/i18n/I18nContext";
 import { Check, Copy } from "lucide-react";
 import { type ReactNode, useState } from "react";
+import { useTranslation } from "@/i18n/I18nContext";
 
 interface CodeBlockProps {
   code: string;
@@ -121,9 +121,8 @@ export function CodeBlock({
           )}
         </button>
       </div>
-      <div
+      <section
         tabIndex={0}
-        role="region"
         aria-label={title ?? `${language} code snippet`}
         className={`overflow-auto p-4 font-mono text-xs leading-relaxed text-[#F1F5F9] ${maxHeightClass}`}
       >
@@ -141,7 +140,7 @@ export function CodeBlock({
             ))}
           </code>
         </pre>
-      </div>
+      </section>
     </div>
   );
 }

@@ -69,7 +69,10 @@ export function GeneralExamplesPage({ onBack }: { onBack: () => void }) {
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
     camera.position.set(78, 62, 92);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      powerPreference: "high-performance",
+    });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.innerHTML = "";
@@ -370,8 +373,8 @@ export_stl(organizer.part, "build/desk_organizer.stl")`;
             Everyday Parametric 3D Printing Gallery
           </h1>
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[#CBD5E1] sm:text-base">
-            Explore three practical, non-aerospace mechanical examples built procedurally in Three.js
-            and paired with ready-to-run build123d Python scripts.
+            Explore three practical, non-aerospace mechanical examples built procedurally in
+            Three.js and paired with ready-to-run build123d Python scripts.
           </p>
         </div>
 

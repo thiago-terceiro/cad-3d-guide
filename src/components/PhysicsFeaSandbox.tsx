@@ -1,12 +1,12 @@
-import { Badge } from "@/design-system/Badge";
-import { Card } from "@/design-system/Card";
-import { Slider } from "@/design-system/Slider";
-import { useTranslation } from "@/i18n/I18nContext";
-import { FEA_MATERIALS, computeFeaMetrics, createBracketGeometry } from "@/utils/cadGeometry";
 import { Activity, AlertTriangle, CheckCircle2, Flame, Gauge, ShieldCheck } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { Badge } from "@/design-system/Badge";
+import { Card } from "@/design-system/Card";
+import { Slider } from "@/design-system/Slider";
+import { useTranslation } from "@/i18n/I18nContext";
+import { computeFeaMetrics, createBracketGeometry, FEA_MATERIALS } from "@/utils/cadGeometry";
 
 type SandboxMode = "kinematics" | "fea";
 
@@ -195,6 +195,10 @@ export function PhysicsFeaSandbox() {
     return () => window.cancelAnimationFrame(frameId);
   }, [mode, effectiveOmega, backlashRad]);
 
+  // Latest FEA inputs, read once when the scene is (re)built; live updates happen in the effect below.
+  const feaInputsRef = useRef({ loadN, exaggerated });
+  feaInputsRef.current = { loadN, exaggerated };
+
   // Mode B: Three.js FEA Bracket Scene
   useEffect(() => {
     if (mode !== "fea") return;
@@ -225,7 +229,7 @@ export function PhysicsFeaSandbox() {
     dirLight.position.set(40, 60, 40);
     scene.add(dirLight);
 
-    const geo = createBracketGeometry(loadN, exaggerated);
+    const geo = createBracketGeometry(feaInputsRef.current.loadN, feaInputsRef.current.exaggerated);
     const mat = new THREE.MeshStandardMaterial({
       vertexColors: true,
       roughness: 0.4,
@@ -271,14 +275,13 @@ export function PhysicsFeaSandbox() {
       resizeObserver.disconnect();
       window.removeEventListener("resize", handleResize);
       controls.dispose();
-      geo.dispose();
+      mesh.geometry.dispose();
       mat.dispose();
       arrow.dispose();
       renderer.dispose();
       container.innerHTML = "";
       feaMeshRef.current = null;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode]);
 
   // Update FEA mesh colors & deflection when loadN or exaggerated changes
