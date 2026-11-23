@@ -1,0 +1,18 @@
+# Agentic Hardware Lab — Zero-GUI Mechanical CAD, Physics & 3D Printing
+
+> Interactive single-page technical guide and simulation playground teaching engineers how to design mechanical parts, run physics/FEA verification, and slice for 3D printing from AI coding harnesses (Claude Code, Codex, Cursor, Antigravity) using Python and MCP servers.
+
+## Core Architecture (5-Stage Autonomous Hardware Loop)
+1. **Harness Prompt**: Claude Code / Codex / Cursor / Antigravity issues parametric hardware intent.
+2. **Code-CAD MCP**: `build123d-mcp` (`uv tool run --python 3.12 build123d-mcp@latest` or `https://buildcad.ai/api/mcp`) or FreeCAD MCP executes B-Rep Python CAD scripts.
+3. **Visual & Topological Gate**: Orthographic 4-view PNG renders (Iso, Top, Front, Right) + watertight B-Rep manifold & interference checks.
+4. **Physics & FEA Verifier**: Headless `MuJoCo` / `Genesis` rigid-body kinematics (`pytest` assertions) and `CalculiX` (FreeCAD FEM) von Mises stress verification.
+5. **Headless CLI Slicer**: `prusa-slicer` / `orca-slicer` CLI exports G-code and parses JSON printability telemetry (filament, print time, support volume, >45° overhangs).
+
+## Key Modules
+- `src/components/HeroArchitectureMap.tsx`: Animated 5-stage SVG node-graph with closed-loop failure/recovery simulation and `.mcp.json` deep-dive drawer.
+- `src/components/CodeCadStudio.tsx`: Split-pane `build123d` Python editor + Three.js 3D CAD viewport with orthographic 4-view toggle and real STL/STEP/3MF export.
+- `src/components/PhysicsFeaSandbox.tsx`: Dual-mode MuJoCo planetary gear kinematics + CalculiX FEA von Mises stress heatmap.
+- `src/components/SlicerAnalyzer.tsx`: Layer 1-240 horizontal G-code slicer with gyroid infill, >45° overhang detection, and CLI JSON telemetry.
+- `src/components/TechStackGuide.tsx`: Detailed comparison of Code-CAD kernels, MCP vs CLI, physics engines, FEA solvers, and headless slicers with pros/cons and alternatives.
+- `src/components/CurriculumStepper.tsx`: 5-step copyable curriculum with `.mcp.json` configs, Python scripts, and system prompts.
